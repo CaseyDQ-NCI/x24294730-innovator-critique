@@ -32,6 +32,122 @@
       color: var(--white);
     }
 
+    /* ─── TOP NAVBAR ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(26, 26, 46, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; flex-wrap: nowrap; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-pitch {
+      border: 1px solid rgba(201,168,76,0.5) !important;
+      color: var(--gold) !important;
+      padding: 7px 14px;
+      border-radius: 4px;
+    }
+    .nav-active {
+      color: var(--gold) !important;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 2px;
+    }
+    .nav-pitch:hover { background: rgba(201,168,76,0.1) !important; }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--slate) !important;
+      padding: 9px 20px;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--slate) !important; }
+    .nav-slide-info {
+      color: rgba(255,255,255,0.35);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-drawer {
+      display: none;
+      flex-direction: column;
+      padding: 0 24px 20px;
+      gap: 4px;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: color 0.2s;
+    }
+    .nav-drawer a:hover { color: var(--gold); }
+    .nav-drawer .nav-active { color: var(--gold) !important; }
+    .nav-drawer .nav-cta {
+      background: var(--gold);
+      color: var(--slate) !important;
+      text-align: center;
+      padding: 12px;
+      border-radius: 4px;
+      margin-top: 8px;
+      border-bottom: none;
+    }
+    @media (max-width: 680px) {
+      .nav-inner { padding: 14px 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+    /* Push deck below navbar */
+    .deck { padding-top: 54px; }
+    .slide { top: 54px !important; height: calc(100vh - 54px) !important; }
+
     /* ─── SLIDE SYSTEM ─── */
     .deck {
       width: 100vw; height: 100vh;
@@ -851,39 +967,28 @@
 <div class="progress-bar" id="progressBar"></div>
 
 <!-- ─── NAVBAR ─── -->
-<nav style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(26,26,46,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);">
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 40px;">
-    <a href="index.html" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold);text-decoration:none;flex-shrink:0;">Vine<span style="color:rgba(255,255,255,0.6);">IQ</span></a>
-    <div style="display:flex;align-items:center;gap:20px;" id="pitchNavLinks">
-      <a href="index.html" style="color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Home</a>
-      <a href="prototype.html" style="color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Prototype</a>
-      <span style="color:rgba(255,255,255,0.25);font-size:0.75rem;letter-spacing:0.06em;" id="navSlideCount">1 / 10</span>
-      <span style="color:rgba(255,255,255,0.2);font-size:0.75rem;letter-spacing:0.08em;">← → to navigate</span>
-      <a href="index.html#waitlist" style="background:var(--gold);color:#1A1A2E;padding:8px 18px;border-radius:4px;font-size:0.8rem;font-weight:700;text-decoration:none;letter-spacing:0.03em;white-space:nowrap;">Join Waitlist</a>
-    </div>
-    <button id="pitchHamburger" style="display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;" onclick="togglePitchMenu()">
-      <span style="display:block;width:22px;height:2px;background:white;border-radius:2px;"></span>
-      <span style="display:block;width:22px;height:2px;background:white;border-radius:2px;"></span>
-      <span style="display:block;width:22px;height:2px;background:white;border-radius:2px;"></span>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Vine<span>IQ</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="prototype.html">Prototype</a></li>
+      <li><span class="nav-slide-info" id="navSlideCount">1 / 10</span></li>
+      <li><span class="nav-slide-info">← → to navigate</span></li>
+      <li><a href="pitch.html" class="nav-active">Investor Pitch</a></li>
+      <li><a href="index.html#waitlist" class="nav-cta">Join Waitlist</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
     </button>
   </div>
-  <div id="pitchDrawer" style="display:none;flex-direction:column;padding:0 24px 16px;gap:4px;border-top:1px solid rgba(255,255,255,0.07);">
-    <a href="index.html" style="color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.88rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">Home</a>
-    <a href="prototype.html" style="color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.88rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">Prototype</a>
-    <a href="index.html#waitlist" style="background:var(--gold);color:#1A1A2E;padding:10px;border-radius:4px;font-size:0.88rem;font-weight:700;text-decoration:none;text-align:center;margin-top:8px;">Join Waitlist</a>
+  <div class="nav-drawer" id="navDrawer">
+    <a href="index.html" onclick="closeDrawer()">Home</a>
+    <a href="prototype.html" onclick="closeDrawer()">Prototype</a>
+    <a href="pitch.html" class="nav-active">Investor Pitch</a>
+    <a href="index.html#waitlist" class="nav-cta" onclick="closeDrawer()">Join Waitlist</a>
   </div>
 </nav>
-
-<style>
-  @media (max-width: 680px) {
-    #pitchNavLinks { display: none !important; }
-    #pitchHamburger { display: flex !important; }
-  }
-  /* Push deck content below navbar */
-  .deck { padding-top: 54px; }
-  .slide { top: 54px !important; height: calc(100vh - 54px) !important; }
-  .nav-bar { bottom: 24px; }
-</style>
 
 <div class="deck" id="deck">
 
@@ -1281,7 +1386,7 @@
   let current = 0;
 
   const dotsContainer = document.getElementById('navDots');
-  const counter = document.getElementById('navCounter');
+  const counter = document.getElementById('navSlideCount');
   const progressBar = document.getElementById('progressBar');
 
   // Build dots
@@ -1324,19 +1429,16 @@
   progressBar.style.width = (1 / totalSlides * 100) + '%';
 
   // Navbar hamburger
-  function togglePitchMenu() {
-    const drawer = document.getElementById('pitchDrawer');
-    const isOpen = drawer.style.display === 'flex';
-    drawer.style.display = isOpen ? 'none' : 'flex';
-  }
-  window.togglePitchMenu = togglePitchMenu;
-
-  // Close drawer when a drawer link is clicked
-  document.querySelectorAll('#pitchDrawer a').forEach(a => {
-    a.addEventListener('click', () => {
-      document.getElementById('pitchDrawer').style.display = 'none';
-    });
+  const hamburger = document.getElementById('hamburger');
+  const navDrawer = document.getElementById('navDrawer');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navDrawer.classList.toggle('open');
   });
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    navDrawer.classList.remove('open');
+  }
 </script>
 </body>
 </html>
