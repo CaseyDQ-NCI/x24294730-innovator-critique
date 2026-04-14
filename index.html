@@ -36,11 +36,13 @@
     /* ─── NAVIGATION ─── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 60px;
-      background: rgba(26, 26, 46, 0.92);
+      background: rgba(26, 26, 46, 0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
     }
     .nav-logo {
       font-family: 'Playfair Display', serif;
@@ -49,35 +51,92 @@
       color: var(--gold);
       letter-spacing: 0.02em;
       text-decoration: none;
+      flex-shrink: 0;
     }
     .nav-logo span { color: var(--white); }
-    .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+    .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; flex-wrap: nowrap; }
     .nav-links a {
       color: rgba(255,255,255,0.75);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.82rem;
       font-weight: 500;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       transition: color 0.2s;
+      white-space: nowrap;
     }
     .nav-links a:hover { color: var(--gold); }
     .nav-pitch {
       border: 1px solid rgba(201,168,76,0.5) !important;
       color: var(--gold) !important;
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 4px;
     }
-    .nav-pitch:hover { background: rgba(201,168,76,0.1) !important; border-color: var(--gold) !important; }
+    .nav-pitch:hover { background: rgba(201,168,76,0.1) !important; }
     .nav-cta {
       background: var(--gold);
       color: var(--slate) !important;
-      padding: 10px 24px;
+      padding: 9px 20px;
       border-radius: 4px;
       font-weight: 600 !important;
       transition: background 0.2s !important;
     }
     .nav-cta:hover { background: var(--gold-light) !important; color: var(--slate) !important; }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none;
+      flex-direction: column;
+      padding: 0 24px 20px;
+      gap: 4px;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: color 0.2s;
+    }
+    .nav-drawer a:hover { color: var(--gold); }
+    .nav-drawer .nav-pitch {
+      border: none !important;
+      color: var(--gold) !important;
+      padding: 12px 0;
+    }
+    .nav-drawer .nav-cta {
+      background: var(--gold);
+      color: var(--slate) !important;
+      text-align: center;
+      padding: 12px;
+      border-radius: 4px;
+      margin-top: 8px;
+      border-bottom: none;
+    }
 
     /* ─── HERO ─── */
     .hero {
@@ -688,8 +747,9 @@
     }
 
     @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
+      .nav-inner { padding: 16px 24px; }
       .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       section { padding: 70px 24px; }
       .hero-content { padding: 120px 24px 80px; }
       .hero-stats { position: static; flex-wrap: wrap; padding: 0 24px 40px; gap: 32px; }
@@ -708,15 +768,26 @@
 
 <!-- ─── NAVIGATION ─── -->
 <nav>
-  <a href="#" class="nav-logo">Vine<span>IQ</span></a>
-  <ul class="nav-links">
-    <li><a href="#problem">The Problem</a></li>
-    <li><a href="#solution">Solution</a></li>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="pitch.html" class="nav-pitch">Investor Pitch</a></li>
-    <li><a href="#waitlist" class="nav-cta">Join Waitlist</a></li>
-  </ul>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Vine<span>IQ</span></a>
+    <ul class="nav-links">
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#solution">Solution</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="pitch.html" class="nav-pitch">Investor Pitch</a></li>
+      <li><a href="#waitlist" class="nav-cta">Join Waitlist</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-drawer" id="navDrawer">
+    <a href="#problem" onclick="closeDrawer()">The Problem</a>
+    <a href="#solution" onclick="closeDrawer()">Solution</a>
+    <a href="#pricing" onclick="closeDrawer()">Pricing</a>
+    <a href="pitch.html" class="nav-pitch">Investor Pitch</a>
+    <a href="#waitlist" class="nav-cta" onclick="closeDrawer()">Join Waitlist</a>
+  </div>
 </nav>
 
 <!-- ─── HERO ─── -->
@@ -1061,5 +1132,17 @@
   </div>
 </footer>
 
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const drawer = document.getElementById('navDrawer');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    drawer.classList.remove('open');
+  }
+</script>
 </body>
 </html>
