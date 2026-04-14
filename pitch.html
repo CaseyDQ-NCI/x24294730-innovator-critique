@@ -744,12 +744,14 @@
 
     /* ── Slide 2 ── */
     #slide-2 {
-      flex-direction: column !important;
-      align-items: stretch;
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: auto auto auto !important;
+      overflow-y: auto;
     }
     .big-problem {
-      flex: none !important;
-      width: 100% !important;
+      grid-column: 1 !important;
+      grid-row: 1 !important;
       padding: 72px 20px 20px !important;
     }
     .problem-statement {
@@ -759,10 +761,11 @@
     .slide-body { font-size: 0.85rem; max-width: 100%; }
     .gold-line { margin: 16px 0; }
     .problem-numbers {
-      flex: none !important;
-      width: 100% !important;
+      grid-column: 1 !important;
+      grid-row: 2 !important;
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
+      width: 100% !important;
     }
     .p-num-card { padding: 20px 14px; }
     .p-num { font-size: 2rem; margin-bottom: 6px; }
@@ -874,21 +877,25 @@
   </div>
 
   <!-- ────────────────────────────── SLIDE 2: PROBLEM ────────────────────────────── -->
-  <div class="slide" id="slide-2">
-    <div class="big-problem">
+  <div class="slide" id="slide-2" style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr auto; overflow:hidden;">
+
+    <!-- Left: problem text -->
+    <div class="big-problem" style="grid-column:1; grid-row:1;">
       <span class="eyebrow">The Problem</span>
       <p class="problem-statement animate-up">Italy's small wine producers are losing <strong>40% of their harvest</strong> to climate change — and have <strong>zero tools</strong> to fight back.</p>
       <div class="gold-line"></div>
       <p class="slide-body animate-up-2">Every precision agriculture platform in existence was designed for industrial operators. The 270,000 small estates that define Italian wine culture are invisible to the market.</p>
     </div>
-    <div class="problem-numbers">
+
+    <!-- Right: stat grid -->
+    <div class="problem-numbers" style="grid-column:2; grid-row:1; display:grid; grid-template-columns:1fr 1fr; gap:2px; background:rgba(0,0,0,0.2);">
       <div class="p-num-card">
         <span class="p-num">40%</span>
-        <span class="p-label">Harvest lost to climate-driven timing failures annually</span>
+        <span class="p-label">Harvest lost to climate-driven timing failures annually <sup style="color:var(--gold);font-size:0.75em;">¹</sup></span>
       </div>
       <div class="p-num-card">
         <span class="p-num">&lt;8%</span>
-        <span class="p-label">Of small producers have access to any precision ag tool</span>
+        <span class="p-label">Of small producers have access to any precision ag tool <sup style="color:var(--gold);font-size:0.75em;">¹</sup></span>
       </div>
       <div class="p-num-card">
         <span class="p-num">€40K</span>
@@ -896,16 +903,18 @@
       </div>
       <div class="p-num-card">
         <span class="p-num">–22%</span>
-        <span class="p-label">Projected yield loss by 2035 under climate change models <sup style="color:var(--gold);font-size:0.75em;">²</sup></span>
+        <span class="p-label">Projected yield loss by 2035 under climate models <sup style="color:var(--gold);font-size:0.75em;">²</sup></span>
       </div>
     </div>
-    <!-- Compliance footnotes -->
-    <div style="background:rgba(0,0,0,0.35);padding:12px 40px;border-top:1px solid rgba(255,255,255,0.07);">
-      <p style="font-size:0.65rem;color:rgba(255,255,255,0.5);line-height:1.6;">
-        <sup style="color:var(--gold);">¹</sup> 40% harvest loss and &lt;8% digital adoption: regional estimates based on ISTAT Agricultural Census 2020 and EC Farm Structure Survey 2023. Independent peer-reviewed validation pending. &nbsp;
-        <sup style="color:var(--gold);">²</sup> –22% yield projection: CMCC Foundation climate modelling, RCP 4.5 scenario (2024). Projections are scenario-based and subject to model uncertainty. Past conditions are not indicative of future outcomes.
+
+    <!-- Footnote bar — full width, row 2 -->
+    <div style="grid-column:1 / -1; grid-row:2; background:rgba(0,0,0,0.4); padding:10px 40px; border-top:1px solid rgba(255,255,255,0.07);">
+      <p style="font-size:0.62rem; color:rgba(255,255,255,0.5); line-height:1.6; margin:0;">
+        <sup style="color:var(--gold);">¹</sup> 40% harvest loss &amp; &lt;8% digital adoption: regional estimates, ISTAT Agricultural Census 2020 &amp; EC Farm Structure Survey 2023. Peer-reviewed validation pending. &nbsp;
+        <sup style="color:var(--gold);">²</sup> –22% yield projection: CMCC Foundation, RCP 4.5 scenario (2024). Scenario-based; not indicative of future outcomes.
       </p>
     </div>
+
   </div>
 
   <!-- ────────────────────────────── SLIDE 3: MARKET ────────────────────────────── -->
