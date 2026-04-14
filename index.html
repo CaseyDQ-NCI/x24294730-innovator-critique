@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VineIQ — Precision Viticulture for the World's Smallest Great Wine Estates</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍇</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --burgundy: #6B1A2A;
+      --burgundy-dark: #4A1020;
+      --gold: #C9A84C;
+      --gold-light: #E8CA7A;
+      --parchment: #F5F0E8;
+      --parchment-dark: #EDE5D5;
+      --slate: #1A1A2E;
+      --slate-mid: #2D2D44;
+      --text-body: #3D2B1F;
+      --text-muted: #7A6050;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--parchment);
+      color: var(--text-body);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAVIGATION ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--slate) !important;
+      padding: 10px 24px;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--slate) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1800&q=80');
+      background-size: cover;
+      background-position: center 40%;
+      filter: brightness(0.45);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(107,26,42,0.6) 0%, rgba(26,26,46,0.8) 60%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 140px 60px 80px;
+      max-width: 760px;
+    }
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-sub {
+      font-size: 1.2rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.82);
+      max-width: 560px;
+      margin-bottom: 44px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--slate);
+      padding: 16px 36px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-block;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-stats {
+      position: absolute; bottom: 50px; right: 60px; z-index: 2;
+      display: flex; gap: 48px;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+    }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ─── SECTION GLOBALS ─── */
+    section { padding: 100px 60px; }
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--slate);
+      margin-bottom: 20px;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 580px;
+    }
+
+    /* ─── PROBLEM ─── */
+    .problem {
+      background: var(--slate);
+      color: var(--white);
+    }
+    .problem .section-title { color: var(--white); }
+    .problem .section-tag { color: var(--gold); }
+    .problem .section-subtitle { color: rgba(255,255,255,0.7); }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .problem-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .stat-card {
+      background: var(--slate-mid);
+      padding: 36px 32px;
+    }
+    .stat-card:first-child { border-radius: 8px 0 0 0; }
+    .stat-card:nth-child(2) { border-radius: 0 8px 0 0; }
+    .stat-card:nth-child(3) { border-radius: 0 0 0 8px; }
+    .stat-card:last-child { border-radius: 0 0 8px 0; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+    }
+    .problem-text { padding-left: 20px; }
+    .problem-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--parchment);
+      border-left: 3px solid var(--gold);
+      padding-left: 28px;
+      margin-bottom: 28px;
+    }
+    .problem-body {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.72);
+    }
+
+    /* ─── PHOTO STRIP ─── */
+    .photo-strip {
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      height: 480px;
+    }
+    .photo-strip-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .photo-strip-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .photo-strip-item:hover img { transform: scale(1.04); }
+    .photo-strip-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 20px 24px;
+      background: linear-gradient(to top, rgba(26,26,46,0.85), transparent);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* ─── SOLUTION ─── */
+    .solution { background: var(--parchment); }
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 60px;
+    }
+    .solution-card {
+      background: var(--white);
+      padding: 44px 36px;
+      position: relative;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .solution-card:hover { border-bottom-color: var(--gold); transform: translateY(-3px); }
+    .solution-card:first-child { border-radius: 8px 0 0 8px; }
+    .solution-card:last-child { border-radius: 0 8px 8px 0; }
+    .card-icon {
+      width: 56px; height: 56px;
+      background: var(--parchment-dark);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 14px;
+    }
+    .card-body {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+    .card-detail {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--burgundy);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .how-it-works { background: var(--parchment-dark); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-top: 60px;
+    }
+    .step {
+      position: relative;
+      padding-top: 60px;
+    }
+    .step::before {
+      content: '';
+      position: absolute;
+      top: 22px; left: 0; right: -40px;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+    .step:last-child::before { display: none; }
+    .step-num {
+      position: absolute;
+      top: 0; left: 0;
+      width: 44px; height: 44px;
+      background: var(--burgundy);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .step-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 12px;
+    }
+    .step-body {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ─── PRICING ─── */
+    .pricing { background: var(--white); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      gap: 2px;
+      margin-top: 60px;
+      max-width: 900px;
+      margin-left: auto; margin-right: auto;
+    }
+    .pricing-card {
+      background: var(--parchment);
+      padding: 44px 36px;
+      text-align: center;
+      position: relative;
+    }
+    .pricing-card.featured {
+      background: var(--burgundy);
+      color: var(--white);
+      z-index: 1;
+      transform: scaleY(1.02);
+      box-shadow: 0 20px 60px rgba(107,26,42,0.3);
+    }
+    .pricing-card:first-child { border-radius: 12px 0 0 12px; }
+    .pricing-card:last-child { border-radius: 0 12px 12px 0; }
+    .pricing-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .pricing-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    .pricing-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .pricing-card:not(.featured) .pricing-price { color: var(--burgundy); }
+    .pricing-period {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      display: block;
+    }
+    .pricing-card.featured .pricing-period { color: rgba(255,255,255,0.6); }
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    .pricing-features li {
+      font-size: 0.9rem;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      color: var(--text-muted);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pricing-card.featured .pricing-features li {
+      color: rgba(255,255,255,0.8);
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .btn-pricing {
+      display: block;
+      padding: 14px;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-pricing-outline {
+      border: 1.5px solid var(--burgundy);
+      color: var(--burgundy);
+    }
+    .btn-pricing-outline:hover { background: var(--burgundy); color: var(--white); }
+    .btn-pricing-solid {
+      background: var(--gold);
+      color: var(--slate);
+    }
+    .btn-pricing-solid:hover { background: var(--gold-light); }
+
+    /* ─── TESTIMONIAL ─── */
+    .testimonials {
+      background: var(--slate);
+      color: var(--white);
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 60px;
+    }
+    .testimonial-card {
+      background: var(--slate-mid);
+      border-radius: 8px;
+      padding: 40px;
+      border-left: 3px solid var(--gold);
+    }
+    .testimonial-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--parchment);
+      margin-bottom: 28px;
+    }
+    .testimonial-author {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .testimonial-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--burgundy);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .testimonial-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--white);
+    }
+    .testimonial-role {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      position: relative;
+      padding: 120px 60px;
+      background-image: url('https://images.unsplash.com/photo-1504279577054-acfeccf8fc52?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+    }
+    .cta-overlay {
+      position: absolute; inset: 0;
+      background: rgba(107,26,42,0.88);
+    }
+    .cta-content { position: relative; z-index: 2; }
+    .cta-section .section-tag { color: var(--gold-light); }
+    .cta-section .section-title { color: var(--white); margin-left: auto; margin-right: auto; max-width: 700px; }
+    .cta-section .section-subtitle { color: rgba(255,255,255,0.75); margin: 0 auto 44px; text-align: center; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--slate);
+      padding: 60px;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 48px;
+    }
+    .footer-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .footer-tagline {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-heading {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+    }
+    .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+    /* ─── WHATSAPP MOCKUP ─── */
+    .whatsapp-demo {
+      background: var(--white);
+      padding: 100px 60px;
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .phone-mockup {
+      background: #1F1F1F;
+      border-radius: 40px;
+      padding: 24px 16px;
+      max-width: 320px;
+      margin: 0 auto;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.25);
+    }
+    .phone-screen {
+      background: #E5DDD5;
+      border-radius: 28px;
+      overflow: hidden;
+    }
+    .wa-header {
+      background: #075E54;
+      padding: 14px 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .wa-avatar {
+      width: 38px; height: 38px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .wa-name { color: white; font-size: 0.9rem; font-weight: 600; }
+    .wa-status { color: rgba(255,255,255,0.7); font-size: 0.72rem; }
+    .wa-messages { padding: 16px 12px; display: flex; flex-direction: column; gap: 10px; }
+    .wa-msg {
+      background: white;
+      border-radius: 0 10px 10px 10px;
+      padding: 10px 14px;
+      max-width: 85%;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: #303030;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .wa-msg.user {
+      background: #DCF8C6;
+      border-radius: 10px 0 10px 10px;
+      align-self: flex-end;
+      color: #303030;
+    }
+    .wa-time {
+      font-size: 0.65rem;
+      color: #999;
+      text-align: right;
+      margin-top: 4px;
+    }
+    .demo-features { }
+    .demo-feature {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--parchment-dark);
+    }
+    .demo-feature:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .demo-feature-icon {
+      width: 48px; height: 48px;
+      background: var(--parchment-dark);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .demo-feature-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--slate);
+      margin-bottom: 6px;
+    }
+    .demo-feature-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      section { padding: 70px 24px; }
+      .hero-content { padding: 120px 24px 80px; }
+      .hero-stats { position: static; flex-wrap: wrap; padding: 0 24px 40px; gap: 32px; }
+      .problem-grid, .demo-grid, .testimonial-grid { grid-template-columns: 1fr; }
+      .photo-strip { grid-template-columns: 1fr; height: auto; }
+      .photo-strip-item { height: 280px; }
+      .solution-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card.featured { transform: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav>
+  <a href="#" class="nav-logo">Vine<span>IQ</span></a>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#waitlist" class="nav-cta">Join Waitlist</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Precision Viticulture · Made for the Artisan</p>
+    <h1>Your vineyard deserves<br><em>intelligence</em> as deep<br>as its roots.</h1>
+    <p class="hero-sub">VineIQ brings AI-powered harvest prediction, disease alerts, and soil intelligence to Italy's small wine estates — delivered via WhatsApp. No app. No dashboard. No complexity.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn-primary">Join the Waitlist</a>
+      <a href="#how" class="btn-ghost">See How It Works</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">87%</span>
+      <span class="hero-stat-label">Harvest accuracy</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">+22%</span>
+      <span class="hero-stat-label">Average yield gain</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">€199</span>
+      <span class="hero-stat-label">Per month</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PHOTO STRIP ─── -->
+<div class="photo-strip">
+  <div class="photo-strip-item">
+    <img src="https://images.unsplash.com/photo-1537033817771-23d3f5a50a1d?w=900&q=80" alt="Southern Italian vineyard rows at golden hour">
+    <span class="photo-strip-caption">Aglianico terraces, Basilicata</span>
+  </div>
+  <div class="photo-strip-item">
+    <img src="https://images.unsplash.com/photo-1464638681273-0962e9b53566?w=600&q=80" alt="Harvesting grapes by hand">
+    <span class="photo-strip-caption">Harvest intelligence</span>
+  </div>
+  <div class="photo-strip-item">
+    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80" alt="Wine grapes on the vine">
+    <span class="photo-strip-caption">Varietal-specific AI</span>
+  </div>
+</div>
+
+<!-- ─── PROBLEM ─── -->
+<section class="problem" id="problem">
+  <span class="section-tag">The Problem</span>
+  <h2 class="section-title">Italy's smallest estates<br>bear the biggest climate risk.</h2>
+  <div class="problem-grid">
+    <div class="problem-stats">
+      <div class="stat-card">
+        <span class="stat-number">270K</span>
+        <span class="stat-label">Small Italian wine producers under 5 hectares</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">40%</span>
+        <span class="stat-label">Average harvest lost to climate-driven timing failures</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">&lt;8%</span>
+        <span class="stat-label">Have access to any precision agriculture tool</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">€40K</span>
+        <span class="stat-label">Annual cost of legacy platforms — far beyond reach</span>
+      </div>
+    </div>
+    <div class="problem-text">
+      <blockquote class="problem-quote">"The tools that could save my harvest were designed for someone ten times my size."</blockquote>
+      <p class="problem-body">Southern Italy's artisan wine producers — the custodians of Aglianico, Nero d'Avola, Fiano, and Greco — are losing their harvests to irregular heat spikes, compressed ripening windows, and unpredictable frosts. Every existing precision agriculture platform is priced and designed for industrial operators managing hundreds of hectares. The small producer is invisible to the market. VineIQ was built to change that.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SOLUTION ─── -->
+<section class="solution" id="solution">
+  <span class="section-tag">The Solution</span>
+  <h2 class="section-title">Three components.<br>One intelligent vineyard.</h2>
+  <p class="section-subtitle">VineIQ combines affordable hardware, satellite data, and AI models trained specifically on indigenous Italian cultivars — all delivered in the interface you already use.</p>
+  <div class="solution-grid">
+    <div class="solution-card">
+      <div class="card-icon">📡</div>
+      <h3 class="card-title">VineNode S1 Sensor Kit</h3>
+      <p class="card-body">Three solar-powered IoT sensor nodes covering your entire estate. Soil moisture, temperature, leaf wetness, rainfall — transmitted every 15 minutes, battery-backed for 12 days, IP67 waterproof. Set up in under 30 minutes.</p>
+      <p class="card-detail">€280 one-time · 3-year maintenance-free</p>
+    </div>
+    <div class="solution-card">
+      <div class="card-icon">🛰️</div>
+      <h3 class="card-title">AI Prediction Engine</h3>
+      <p class="card-body">Our models are trained on 15 years of phenology records for 40+ indigenous Italian varietals. Sentinel-2 satellite imagery refreshes every 5 days. Harvest windows predicted 14 days out with 87% accuracy. Disease risk flagged before it's visible to the eye.</p>
+      <p class="card-detail">Varietal-specific · Mediterranean-calibrated</p>
+    </div>
+    <div class="solution-card">
+      <div class="card-icon">💬</div>
+      <h3 class="card-title">WhatsApp-First Interface</h3>
+      <p class="card-body">No app to download. No dashboard to learn. VineIQ lives in your existing WhatsApp. Daily digests, urgent voice note alerts in your regional dialect, satellite images of your parcels — all in the chat you already have open.</p>
+      <p class="card-detail">Italian · Voice notes · Zero learning curve</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section class="how-it-works" id="how">
+  <span class="section-tag">How It Works</span>
+  <h2 class="section-title">From order to intelligence<br>in under 48 hours.</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">1</span>
+      <h3 class="step-title">Order your VineNode kit</h3>
+      <p class="step-body">Three sensor nodes delivered to your door. Your estate's cadastral parcel data is loaded automatically. Your cultivars are pre-configured.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">2</span>
+      <h3 class="step-title">Install in 30 minutes</h3>
+      <p class="step-body">Push each stake into the ground, angle the solar panel south, scan the QR code. VineIQ confirms connection via WhatsApp within minutes.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <h3 class="step-title">Receive daily intelligence</h3>
+      <p class="step-body">Every morning at 7AM: soil status, harvest forecast, disease risk, irrigation recommendation — in plain Italian, in WhatsApp.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">4</span>
+      <h3 class="step-title">Harvest with confidence</h3>
+      <p class="step-body">When the window opens, VineIQ tells you — 14 days ahead. Your neighbours in the cooperative data pool see their accuracy improve too.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHATSAPP DEMO ─── -->
+<section class="whatsapp-demo">
+  <span class="section-tag">The Interface</span>
+  <h2 class="section-title">Precision agriculture<br>in your pocket.</h2>
+  <div class="demo-grid">
+    <div class="phone-mockup">
+      <div class="phone-screen">
+        <div class="wa-header">
+          <div class="wa-avatar">🍇</div>
+          <div>
+            <div class="wa-name">VineIQ · Tenuta Ferrara</div>
+            <div class="wa-status">Oggi · 07:00</div>
+          </div>
+        </div>
+        <div class="wa-messages">
+          <div class="wa-msg">
+            🍇 <strong>VineIQ · Lunedì 14 aprile</strong><br><br>
+            🌡️ Stanotte min –0.2°C<br>⚠️ <strong>RISCHIO GELO MODERATO</strong><br>
+            Attiva protezione zone A2–B1<br><br>
+            💧 Umidità suolo: 34% VWC ✓<br>
+            Nessuna irrigazione necessaria<br><br>
+            🔭 Vendemmia prevista: <strong>18–22 settembre</strong><br>Confidenza: 84%
+            <div class="wa-time">07:00 ✓✓</div>
+          </div>
+          <div class="wa-msg user">
+            report completo
+            <div class="wa-time">07:03 ✓✓</div>
+          </div>
+          <div class="wa-msg">
+            📊 <strong>Report completo — Parcella C3</strong><br><br>
+            NDVI anomalia rilevata (+1.8σ)<br>
+            Probabile: stress idrico precoce<br><br>
+            🛰️ Immagine Sentinel-2 allegata ↓
+            <div class="wa-time">07:03 ✓✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="demo-features">
+      <div class="demo-feature">
+        <div class="demo-feature-icon">🌅</div>
+        <div>
+          <p class="demo-feature-title">Daily Morning Digest</p>
+          <p class="demo-feature-text">Your vineyard's overnight status, day's recommendations, and 14-day harvest forecast — every morning at 7AM, automatically.</p>
+        </div>
+      </div>
+      <div class="demo-feature">
+        <div class="demo-feature-icon">🚨</div>
+        <div>
+          <p class="demo-feature-title">Urgent Voice Alerts</p>
+          <p class="demo-feature-text">Frost risk, severe disease pressure, or canopy stress trigger instant voice notes in your regional dialect — Barese, Napoletano, or Siciliano.</p>
+        </div>
+      </div>
+      <div class="demo-feature">
+        <div class="demo-feature-icon">🛰️</div>
+        <div>
+          <p class="demo-feature-title">Satellite Parcel Images</p>
+          <p class="demo-feature-text">Sentinel-2 imagery of your parcels sent directly in chat — colour-coded stress maps showing exactly which rows need attention.</p>
+        </div>
+      </div>
+      <div class="demo-feature">
+        <div class="demo-feature-icon">🤝</div>
+        <div>
+          <p class="demo-feature-title">Cooperative Intelligence</p>
+          <p class="demo-feature-text">Anonymous data pooling with neighbouring estates improves everyone's accuracy. The more producers join, the smarter it gets for all.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section class="pricing" id="pricing">
+  <span class="section-tag">Pricing</span>
+  <h2 class="section-title">Built for artisans,<br>not agri-corporations.</h2>
+  <p class="section-subtitle">Every plan includes full access to the AI engine and WhatsApp interface. Start with the sensor kit trial.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <span class="pricing-tag">Starter</span>
+      <p class="pricing-name">VineIQ Essenziale</p>
+      <p class="pricing-price">€99</p>
+      <span class="pricing-period">per month · up to 2 ha</span>
+      <ul class="pricing-features">
+        <li>1× VineNode sensor</li>
+        <li>Daily WhatsApp digest</li>
+        <li>Harvest window forecast</li>
+        <li>Frost & disease alerts</li>
+        <li>14-day weather forecast</li>
+      </ul>
+      <a href="#waitlist" class="btn-pricing btn-pricing-outline">Get Started</a>
+    </div>
+    <div class="pricing-card featured">
+      <span class="pricing-tag">Most Popular</span>
+      <p class="pricing-name">VineIQ Artigiano</p>
+      <p class="pricing-price">€199</p>
+      <span class="pricing-period">per month · up to 5 ha</span>
+      <ul class="pricing-features">
+        <li>3× VineNode sensors</li>
+        <li>Daily digest + voice alerts</li>
+        <li>Harvest window + Brix model</li>
+        <li>Disease detection (AI imaging)</li>
+        <li>Satellite parcel maps</li>
+        <li>Cooperative data pool access</li>
+        <li>Irrigation scheduler</li>
+      </ul>
+      <a href="#waitlist" class="btn-pricing btn-pricing-solid">Join Waitlist</a>
+    </div>
+    <div class="pricing-card">
+      <span class="pricing-tag">Premium</span>
+      <p class="pricing-name">VineIQ Maestro</p>
+      <p class="pricing-price">€349</p>
+      <span class="pricing-period">per month · up to 10 ha</span>
+      <ul class="pricing-features">
+        <li>6× VineNode sensors</li>
+        <li>All Artigiano features</li>
+        <li>Drone imagery (seasonal)</li>
+        <li>Human agronomist review</li>
+        <li>Harvest planning session</li>
+        <li>Export reports for DOC/DOCG</li>
+      </ul>
+      <a href="#waitlist" class="btn-pricing btn-pricing-outline">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="testimonials">
+  <span class="section-tag">Early Access Producers</span>
+  <h2 class="section-title">From the people who<br>trusted us first.</h2>
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-text">"I've been growing Aglianico for 30 years. Last season VineIQ told me to wait three more days before harvest. I almost ignored it. I didn't. It was the best vintage of my life."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">🧑‍🌾</div>
+        <div>
+          <p class="testimonial-name">Antonio Ferrara</p>
+          <p class="testimonial-role">Tenuta Ferrara, Basilicata · 3.2 ha</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">"The frost alert at 2AM saved us. We activated the wind machines in time. Without VineIQ, we would have lost the whole early parcel. I don't know how we managed before."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👩‍🌾</div>
+        <div>
+          <p class="testimonial-name">Lucia Greco</p>
+          <p class="testimonial-role">Cantine Greco, Campania · 4.7 ha</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="cta-section" id="waitlist">
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <span class="section-tag">Join the Waitlist</span>
+    <h2 class="section-title">The harvest of your lifetime starts with a message.</h2>
+    <p class="section-subtitle">We're accepting the first 500 producers in Basilicata and Campania. Sensor kit included free for founding members.</p>
+    <a href="https://wa.me/390299999999?text=Ciao+VineIQ%2C+voglio+unirmi+alla+lista+d%27attesa" class="btn-primary" style="font-size:1.1rem; padding:18px 48px;">
+      Start on WhatsApp →
+    </a>
+    <p style="color:rgba(255,255,255,0.45); font-size:0.8rem; margin-top:20px;">No commitment. Response within 24 hours. Free sensor kit for first 500 members.</p>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-brand-name">VineIQ</p>
+      <p class="footer-tagline">Precision viticulture for the world's smallest great wine estates. Built in Matera, Italy. Powered by AI and the wisdom of the land.</p>
+    </div>
+    <div>
+      <p class="footer-heading">Product</p>
+      <ul class="footer-links">
+        <li><a href="#solution">VineNode Sensor</a></li>
+        <li><a href="#solution">AI Engine</a></li>
+        <li><a href="#solution">WhatsApp Interface</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Company</p>
+      <ul class="footer-links">
+        <li><a href="#">About VineIQ</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Contact</p>
+      <ul class="footer-links">
+        <li><a href="#">hello@vineiq.it</a></li>
+        <li><a href="#">Via Lucana 42, Matera</a></li>
+        <li><a href="#">WhatsApp Support</a></li>
+        <li><a href="#">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 VineIQ SRL · P.IVA IT1234567890 · Matera, Italy</p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
