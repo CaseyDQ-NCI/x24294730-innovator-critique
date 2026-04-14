@@ -51,7 +51,7 @@
       text-decoration: none;
     }
     .nav-logo span { color: var(--white); }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
     .nav-links a {
       color: rgba(255,255,255,0.75);
       text-decoration: none;
@@ -62,6 +62,13 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--gold); }
+    .nav-pitch {
+      border: 1px solid rgba(201,168,76,0.5) !important;
+      color: var(--gold) !important;
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+    .nav-pitch:hover { background: rgba(201,168,76,0.1) !important; border-color: var(--gold) !important; }
     .nav-cta {
       background: var(--gold);
       color: var(--slate) !important;
@@ -707,7 +714,7 @@
     <li><a href="#solution">Solution</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#pricing">Pricing</a></li>
-    <li><a href="pitch.html">Investor Pitch</a></li>
+    <li><a href="pitch.html" class="nav-pitch">Investor Pitch</a></li>
     <li><a href="#waitlist" class="nav-cta">Join Waitlist</a></li>
   </ul>
 </nav>
