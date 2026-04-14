@@ -356,16 +356,10 @@
 
     /* ─── SLIDE 5: TRACTION ─── */
     #slide-5 {
-      background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1600&q=80');
-      background-size: cover;
-      background-position: center;
+      background: var(--slate);
       flex-direction: column;
     }
-    #slide-5::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: rgba(26,26,46,0.88);
-    }
+    #slide-5::before { display: none; }
     .traction-content {
       position: relative; z-index: 1;
       padding: 80px;
