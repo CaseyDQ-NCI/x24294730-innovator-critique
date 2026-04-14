@@ -6,7 +6,7 @@
 
 **VineIQ SRL** is a Matera-based deeptech startup delivering AI-powered precision viticulture to Italy's 270,000 small wine producers (< 5 ha) — the backbone of the country's DOC/DOCG wine economy — who collectively lose 30–45% of annual yield to climate-driven harvest timing failures yet have zero access to affordable precision agriculture tools. VineIQ delivers its intelligence through a €280 solar IoT sensor kit, a varietal-specific AI engine trained on 40+ indigenous Italian cultivars, and a WhatsApp-native interface requiring no app, no dashboard, and no learning curve. The platform is priced at €199/month — 95% less than legacy alternatives.
 
-**Seeking:** €3.5M seed round (Q3 2026) | **Use:** 18 months runway to 5,000 producers and Series A readiness
+**Seeking:** €2M seed round (Q3 2026) | **Use:** 18 months runway to 5,000 producers and Series A readiness
 
 ---
 
@@ -161,16 +161,16 @@
 
 ## 9. Funding
 
-### Seed Round: €3.5M
+### Seed Round: €2M
 
 **Allocation:**
 
 | Use of funds | % | Amount |
 |---|---|---|
-| R&D & AI platform development | 40% | €1.4M |
-| Sales & marketing (Coldiretti rollout) | 28% | €0.98M |
-| Hardware supply chain & manufacturing | 20% | €0.70M |
-| Operations, legal, HR | 12% | €0.42M |
+| R&D & AI platform development | 40% | €0.80M |
+| Sales & marketing (Coldiretti rollout) | 28% | €0.56M |
+| Hardware supply chain & manufacturing | 20% | €0.40M |
+| Operations, legal, HR | 12% | €0.24M |
 
 **Milestones funded by this round:**
 - 500 → 5,000 producers (18 months)
