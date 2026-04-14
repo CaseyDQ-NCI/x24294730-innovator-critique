@@ -25,7 +25,7 @@ VineIQ is an **AI-powered precision viticulture platform** purpose-built for sma
 
 **VineIQ SRL** — an Italian-registered deeptech startup headquartered in Matera (Basilicata), with R&D partnerships with:
 - **CMCC Foundation** (Centro Euro-Mediterraneo sui Cambiamenti Climatici) for climate modelling
-- **University of Naples Federico II** (Dept. of Agricultural Sciences) for varietal phenology data
+- **CREA** (National Research Centre for Agriculture and Economics) for 15-year varietal phenology dataset
 - **Coldiretti** (Italy's largest farmers' association) as distribution and trust partner
 
 **Legal form:** SRL (Società a Responsabilità Limitata), targeting B-Corp certification within 24 months.

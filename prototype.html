@@ -654,6 +654,200 @@ NLG → Italian WhatsApp messages + regional-dialect voice notes
   </div>
 </section>
 
+<!-- INTERACTIVE SIMULATOR -->
+<section style="background:var(--slate); padding:80px 0;">
+  <div class="container">
+    <span class="section-label" style="color:var(--gold-light);">Interactive Alpha</span>
+    <h2 class="section-title" style="color:var(--white);">Try the VineIQ onboarding flow</h2>
+    <p style="font-size:1rem;line-height:1.7;color:rgba(255,255,255,0.55);max-width:520px;margin-bottom:48px;">Step through the real WhatsApp interaction a producer experiences on day one — from QR scan to first harvest forecast. Click each step to advance.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+
+      <!-- Phone -->
+      <div style="max-width:300px;margin:0 auto;">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="wa-header">
+              <div class="wa-avatar">🍇</div>
+              <div>
+                <div class="wa-name">VineIQ Setup</div>
+                <div class="wa-status" id="sim-status">Step through the flow →</div>
+              </div>
+            </div>
+            <div class="wa-messages" id="sim-messages" style="min-height:320px;">
+              <div class="wa-msg" style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);color:rgba(255,255,255,0.6);font-size:0.72rem;text-align:center;border-radius:8px;">
+                Press <strong style="color:var(--gold);">Start Simulation</strong> below to begin
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Progress dots -->
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:20px;" id="sim-dots"></div>
+      </div>
+
+      <!-- Controls -->
+      <div>
+        <div id="sim-step-info" style="margin-bottom:32px;">
+          <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Step 0 of 5</p>
+          <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:10px;">Ready to start</p>
+          <p style="font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.6;">This simulation walks through the five-step onboarding and first-day experience of a VineIQ producer. No signup required — this is a front-end prototype.</p>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button id="sim-btn-next" onclick="simNext()"
+            style="background:var(--gold);color:var(--slate);border:none;padding:14px 32px;border-radius:4px;font-weight:700;font-size:0.9rem;cursor:pointer;transition:background 0.2s;letter-spacing:0.03em;">
+            Start Simulation
+          </button>
+          <button onclick="simReset()"
+            style="background:transparent;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.15);padding:14px 24px;border-radius:4px;font-size:0.88rem;cursor:pointer;transition:all 0.2s;">
+            Reset
+          </button>
+        </div>
+
+        <div id="sim-note" style="margin-top:28px;padding:20px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.15);border-radius:6px;display:none;">
+          <p style="font-size:0.78rem;font-weight:700;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">How this works in production</p>
+          <p id="sim-note-text" style="font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sim-msg-enter { animation: msgIn 0.4s ease forwards; opacity: 0; }
+  @keyframes msgIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+</style>
+
+<script>
+const SIM_STEPS = [
+  {
+    label: "Step 1 of 5",
+    title: "QR Scan — Pairing the sensor",
+    desc: "Producer scans the QR code printed on the VineNode S1 box. WhatsApp opens automatically with a pre-filled message. No app download. No account creation.",
+    status: "Pairing VineNode...",
+    note: "The QR encodes a wa.me deep-link with a pre-filled payload containing the node serial number. The backend reads the serial, looks up the cadastral parcel, and pre-populates the estate profile.",
+    messages: [
+      { text: "📡 VineNode S1 detected!\n\nSerial: VN-IT-2026-00847\nParcel: Tenuta Ferrara, Basilicata\nCoordinates: 40.6°N 15.8°E\n\n✅ Node connected successfully", type: "bot" }
+    ]
+  },
+  {
+    label: "Step 2 of 5",
+    title: "Cultivar confirmation",
+    desc: "VineIQ reads the cadastral parcel data and suggests the most common variety grown in that zone. The producer simply confirms or corrects with a single reply.",
+    status: "Confirming cultivar...",
+    note: "Cultivar data is pre-loaded from CREA's national vineyard cadastre (15-year dataset covering 40+ indigenous Italian varietals). The producer only needs to confirm — reducing friction to a single tap.",
+    messages: [
+      { text: "📡 VineNode S1 detected!\n\nSerial: VN-IT-2026-00847\nParcel: Tenuta Ferrara, Basilicata\n\n✅ Node connected successfully", type: "bot" },
+      { text: "🍇 Ciao Antonio! Ho rilevato la tua vigna.\n\nVarietà rilevata: Aglianico del Vulture\nSuperficie: 3.2 ha\n\nÈ corretto? Rispondi Sì / No / [altra varietà]", type: "bot", delay: true },
+      { text: "Sì, corretto!", type: "user" }
+    ]
+  },
+  {
+    label: "Step 3 of 5",
+    title: "Target Brix & harvest style",
+    desc: "The producer sets their winemaking preference once. VineIQ uses this to calibrate the harvest window model for their specific style — early, classic, or late.",
+    status: "Setting harvest target...",
+    note: "Brix target (sugar content at harvest) is the single most important variable for harvest timing. Storing this preference means VineIQ never gives a generic recommendation — every alert is personalised to the producer's winemaking style.",
+    messages: [
+      { text: "Sì, corretto!", type: "user" },
+      { text: "Perfetto! 🎯\n\nQuale Brix target preferisci?\n\nA) 24–25 Brix (stile fresco/precoce)\nB) 26–27 Brix (stile classico)\nC) 28+ Brix (stile ricco/tardivo)\n\nRispondi A, B o C", type: "bot" },
+      { text: "B", type: "user" }
+    ]
+  },
+  {
+    label: "Step 4 of 5",
+    title: "First sensor readings arrive",
+    desc: "Within 15 minutes of installation, VineIQ sends the first soil and climate readings. The producer can see their vineyard's live status immediately — no waiting, no configuration.",
+    status: "First readings live!",
+    note: "Sensor data is transmitted every 15 minutes via LoRaWAN to the regional gateway, processed in AWS IoT Core, and pushed to the WhatsApp bot via the Cloud API. The entire pipeline from sensor to message takes under 90 seconds.",
+    messages: [
+      { text: "B", type: "user" },
+      { text: "✅ Configurazione completata!\n\nBrix target: 26–27 (stile classico)\nVendemmia stimata: settembre\n\n📡 In attesa dei primi dati del sensore...", type: "bot" },
+      { text: "📊 PRIME RILEVAZIONI — ore 14:32\n\n🌡️ Temp suolo: 18.4°C\n💧 Umidità: 41% VWC\n🌿 Foglie: asciutte\n☀️ PAR: 823 µmol/m²/s\n\nTutto nella norma. Prossimo aggiornamento tra 15 minuti.", type: "bot", delay: true }
+    ]
+  },
+  {
+    label: "Step 5 of 5",
+    title: "First harvest forecast delivered",
+    desc: "VineIQ runs the phenology model and delivers the first 14-day harvest window prediction. The producer has actionable intelligence within the same hour as installation.",
+    status: "Harvest forecast ready ✓",
+    note: "The phenology model combines the sensor baseline, satellite NDVI from the last Sentinel-2 pass (max 5-day lag), and historical Aglianico records from the CREA dataset. Confidence score reflects data age and local microclimate variance.",
+    messages: [
+      { text: "📊 PRIME RILEVAZIONI — ore 14:32\n\nTutto nella norma. Prossimo aggiornamento ore 14:47.", type: "bot" },
+      { text: "🔭 PRIMA PREVISIONE VENDEMMIA\n\nVarietà: Aglianico del Vulture\nTarget Brix: 26–27\n\n📅 Finestra ottimale: 18–24 settembre\nConfidenza modello: 79%\n\n⬆️ La confidenza aumenterà nelle prossime settimane man mano che raccogliamo più dati dalla tua vigna.\n\nBuona vendemmia, Antonio! 🍇", type: "bot", delay: true },
+      { text: "Grazie! Non ci credo ancora 😂", type: "user" }
+    ]
+  }
+];
+
+let simStep = -1;
+
+function buildDots() {
+  const d = document.getElementById('sim-dots');
+  d.innerHTML = '';
+  SIM_STEPS.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= simStep ? '#C9A84C' : 'rgba(255,255,255,0.15)'};transition:background 0.3s;`;
+    d.appendChild(dot);
+  });
+}
+
+function renderMessages(msgs) {
+  const container = document.getElementById('sim-messages');
+  container.innerHTML = '';
+  msgs.forEach((m, idx) => {
+    const div = document.createElement('div');
+    div.className = 'wa-msg sim-msg-enter ' + (m.type === 'user' ? 'user' : '');
+    div.style.animationDelay = (m.delay ? '0.5s' : idx * 0.12 + 's');
+    div.style.opacity = '0';
+    div.innerHTML = m.text.replace(/\n/g, '<br>') + `<div class="wa-time">${m.type === 'user' ? 'ora ✓✓' : 'VineIQ ✓✓'}</div>`;
+    container.appendChild(div);
+  });
+  setTimeout(() => container.scrollTop = container.scrollHeight, 600);
+}
+
+function simNext() {
+  simStep++;
+  if (simStep >= SIM_STEPS.length) { simStep = SIM_STEPS.length - 1; return; }
+  const step = SIM_STEPS[simStep];
+  document.getElementById('sim-status').textContent = step.status;
+  document.getElementById('sim-step-info').innerHTML = `
+    <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">${step.label}</p>
+    <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:10px;">${step.title}</p>
+    <p style="font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.6;">${step.desc}</p>
+  `;
+  const noteEl = document.getElementById('sim-note');
+  noteEl.style.display = 'block';
+  document.getElementById('sim-note-text').textContent = step.note;
+  renderMessages(step.messages);
+  buildDots();
+  const btn = document.getElementById('sim-btn-next');
+  if (simStep === SIM_STEPS.length - 1) {
+    btn.textContent = '✓ Simulation complete';
+    btn.style.background = '#3D5A3E';
+    btn.style.color = '#A8D5A2';
+    btn.onclick = null;
+  } else {
+    btn.textContent = 'Next Step →';
+  }
+}
+
+function simReset() {
+  simStep = -1;
+  document.getElementById('sim-status').textContent = 'Step through the flow →';
+  document.getElementById('sim-messages').innerHTML = '<div class="wa-msg" style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);color:rgba(255,255,255,0.6);font-size:0.72rem;text-align:center;border-radius:8px;">Press <strong style=\'color:var(--gold);\'>Start Simulation</strong> below to begin</div>';
+  document.getElementById('sim-step-info').innerHTML = '<p style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Step 0 of 5</p><p style="font-family:\'Playfair Display\',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:10px;">Ready to start</p><p style="font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.6;">This simulation walks through the five-step onboarding and first-day experience of a VineIQ producer.</p>';
+  document.getElementById('sim-note').style.display = 'none';
+  document.getElementById('sim-dots').innerHTML = '';
+  const btn = document.getElementById('sim-btn-next');
+  btn.textContent = 'Start Simulation';
+  btn.style.background = 'var(--gold)';
+  btn.style.color = 'var(--slate)';
+  btn.onclick = simNext;
+}
+buildDots();
+</script>
+
 <!-- FOOTER -->
 <div class="proto-footer">
   <p class="footer-brand">Vine<span>IQ</span></p>
